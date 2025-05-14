@@ -1,43 +1,359 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
+<head>
     <meta charset="utf-8" />
-    <link rel="icon" href="%PUBLIC_URL%/favicon.ico" />
+    <title>Abhivastra Designer Studio - Home</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <meta name="theme-color" content="#000000" />
-    <meta
-      name="description"
-      content="Web site created using create-react-app"
-    />
-    <link rel="apple-touch-icon" href="%PUBLIC_URL%/logo192.png" />
-    <!--
-      manifest.json provides metadata used when your web app is installed on a
-      user's mobile device or desktop. See https://developers.google.com/web/fundamentals/web-app-manifest/
-    -->
-    <link rel="manifest" href="%PUBLIC_URL%/manifest.json" />
-    <!--
-      Notice the use of %PUBLIC_URL% in the tags above.
-      It will be replaced with the URL of the `public` folder during the build.
-      Only files inside the `public` folder can be referenced from the HTML.
+    <style>
+        /* Reset some */
+        * {
+            box-sizing: border-box;
+        }
+        body {
+            margin: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #f9f9f9;
+            color: #333;
+        }
+        a {
+            color: #0077cc;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+        a:hover {
+            color: #005fa3;
+        }
+        header {
+            background: #222;
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0.8rem 1.5rem;
+            flex-wrap: wrap;
+        }
+        header .logo {
+            font-weight: 900;
+            font-size: 1.6rem;
+            letter-spacing: 2px;
+        }
+        header nav {
+            display: flex;
+            gap: 1.5rem;
+            flex-wrap: wrap;
+            margin-top: 0.3rem;
+        }
+        header nav a {
+            font-weight: 600;
+            padding: 0.25rem 0.5rem;
+        }
+        header .search-cart {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            margin-top: 0.3rem;
+        }
+        header .search-cart input[type="text"] {
+            padding: 0.3rem 0.5rem;
+            border-radius: 4px;
+            border: none;
+            outline: none;
+            width: 150px;
+            transition: width 0.3s ease;
+            font-size: 0.95rem;
+        }
+        header .search-cart input[type="text"]:focus {
+            width: 220px;
+            box-shadow: 0 0 5px #0077cc;
+        }
+        header .cart-icon {
+            font-size: 1.6rem;
+            cursor: pointer;
+        }
 
-      Unlike "/favicon.ico" or "favicon.ico", "%PUBLIC_URL%/favicon.ico" will
-      work correctly both with client-side routing and a non-root public URL.
-      Learn how to configure a non-root public URL by running `npm run build`.
-    -->
-    <title>React App</title>
-  </head>
-  <body>
-    <noscript>You need to enable JavaScript to run this app.</noscript>
-    <div id="root"></div>
-    <!--
-      This HTML file is a template.
-      If you open it directly in the browser, you will see an empty page.
+        .hero {
+            position: relative;
+            text-align: center;
+            color: white;
+            font-weight: 700;
+            margin-bottom: 3rem;
+        }
+        .hero img {
+            width: 100%;
+            max-height: 400px;
+            object-fit: cover;
+            filter: brightness(0.7);
+        }
+        .hero button {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: #ff5e62;
+            border: none;
+            padding: 1rem 2rem;
+            font-size: 1.25rem;
+            border-radius: 40px;
+            cursor: pointer;
+            color: white;
+            box-shadow: 0 6px 12px rgba(255,94,98,0.5);
+            transition: background 0.3s ease;
+        }
+        .hero button:hover {
+            background: #e03e42;
+        }
 
-      You can add webfonts, meta tags, or analytics to this file.
-      The build step will place the bundled scripts into the <body> tag.
+        .featured-collections, .best-sellers, .newsletter {
+            max-width: 1100px;
+            margin: 0 auto 3rem;
+            padding: 0 1rem;
+        }
+        .featured-collections h2, .best-sellers h2, .newsletter h2 {
+            font-weight: 900;
+            margin-bottom: 1rem;
+            text-align: center;
+            font-size: 2rem;
+            letter-spacing: 1px;
+            color: #222;
+        }
 
-      To begin the development, run `npm start` or `yarn start`.
-      To create a production bundle, use `npm run build` or `yarn build`.
-    -->
-  </body>
+        .featured-collections .collections-grid,
+        .best-sellers .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .featured-collections .collection, 
+        .best-sellers .product {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgb(0 0 0 / 0.1);
+            padding-bottom: 1rem;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            cursor: pointer;
+        }
+        .featured-collections .collection:hover,
+        .best-sellers .product:hover {
+            transform: scale(1.03);
+        }
+        .featured-collections .collection img,
+        .best-sellers .product img {
+            width: 100%;
+            height: 220px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+        }
+        .featured-collections .collection h3,
+        .best-sellers .product h4 {
+            margin: 0.75rem 1rem 0.25rem 1rem;
+            color: #111;
+        }
+        .best-sellers .product p {
+            margin: 0 1rem 0.75rem 1rem;
+            font-weight: 700;
+            color: #ff5e62;
+            font-size: 1.1rem;
+        }
+        .best-sellers .product button {
+            margin: 0 1rem;
+            padding: 0.5rem 1rem;
+            background: #0077cc;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: background 0.3s ease;
+        }
+        .best-sellers .product button:hover {
+            background: #005fa3;
+        }
+
+        .newsletter {
+            background: #0077cc;
+            color: white;
+            text-align: center;
+            padding: 2rem 1rem;
+            border-radius: 10px;
+        }
+        .newsletter input[type="email"] {
+            padding: 0.75rem 1rem;
+            font-size: 1rem;
+            border-radius: 40px;
+            border: none;
+            width: 280px;
+            max-width: 90%;
+            margin-right: 0.75rem;
+            outline: none;
+        }
+        .newsletter button {
+            background: #ff5e62;
+            border: none;
+            color: white;
+            font-weight: 700;
+            padding: 0.8rem 1.7rem;
+            border-radius: 40px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background 0.3s ease;
+        }
+        .newsletter button:hover {
+            background: #e03e42;
+        }
+
+        footer.footer {
+            background: #222;
+            color: white;
+            padding: 1.5rem;
+            text-align: center;
+            font-size: 0.9rem;
+        }
+        footer.footer .footer-links,
+        footer.footer .social-media {
+            margin-bottom: 1rem;
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+        }
+        footer.footer .footer-links a,
+        footer.footer .social-media a {
+            color: white;
+            opacity: 0.7;
+            transition: opacity 0.3s ease;
+            display: inline-flex;
+            align-items: center;
+        }
+        footer.footer .footer-links a:hover,
+        footer.footer .social-media a:hover {
+            opacity: 1;
+        }
+        footer.footer .social-media img {
+            width: 24px;
+            height: 24px;
+            filter: invert(1);
+        }
+        @media (max-width: 600px) {
+            header {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+            header nav {
+                margin-top: 0.5rem;
+            }
+            header .search-cart {
+                margin-top: 0.5rem;
+            }
+            .featured-collections .collections-grid,
+            .best-sellers .products-grid {
+                grid-template-columns: 1fr;
+            }
+            .newsletter input[type="email"] {
+                width: 100%;
+                margin-bottom: 0.5rem;
+            }
+            .newsletter button {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="logo">Abhivastra Designer Studio</div>
+        <nav>
+            <a href="#">Home</a>
+            <a href="#">Shop</a>
+            <a href="#">About Us</a>
+            <a href="#">Blog</a>
+            <a href="#">Contact Us</a>
+        </nav>
+        <div class="search-cart">
+            <input type="text" placeholder="Search..." />
+            <span class="cart-icon" title="Shopping Cart">🛒</span>
+        </div>
+    </header>
+
+    <section class="hero" aria-label="Main banner">
+        <img src="https://images.unsplash.com/photo-1521334884684-d80222895322?auto=format&fit=crop&w=1400&q=80" alt="Latest collection banner showing colorful dresses" />
+        <button onclick="window.location='#featured-collections'">Shop Now</button>
+    </section>
+
+    <section class="featured-collections" id="featured-collections">
+        <h2>Featured Collections</h2>
+        <div class="collections-grid">
+            <article class="collection" tabindex="0" aria-label="Ethnic Wear Collection">
+                <img src="https://images.unsplash.com/photo-1512436991641-6745cdb1723f?auto=format&fit=crop&w=600&q=70" alt="Ethnic Wear collection showcasing traditional style clothes" />
+                <h3>Ethnic Wear</h3>
+            </article>
+            <article class="collection" tabindex="0" aria-label="Western Wear Collection">
+                <img src="https://images.unsplash.com/photo-1465188035480-8b8fb4c3e8f1?auto=format&fit=crop&w=600&q=70" alt="Western Wear collection with modern dresses" />
+                <h3>Western Wear</h3>
+            </article>
+            <article class="collection" tabindex="0" aria-label="Accessories Collection">
+                <img src="https://images.unsplash.com/photo-1483985988355-763728e1935b?auto=format&fit=crop&w=600&q=70" alt="Accessories collection including bags and jewelry" />
+                <h3>Accessories</h3>
+            </article>
+        </div>
+    </section>
+
+    <section class="best-sellers">
+        <h2>Best Sellers</h2>
+        <div class="products-grid">
+            <article class="product" tabindex="0" aria-label="Product 1: Women's Red Dress">
+                <img src="https://images.unsplash.com/photo-1495121605193-b116b5b9c0e1?auto=format&fit=crop&w=400&q=70" alt="Red dress for women" />
+                <h4>Women's Red Dress</h4>
+                <p>$79.99</p>
+                <button aria-label="Quick view red dress">Quick View</button>
+            </article>
+            <article class="product" tabindex="0" aria-label="Product 2: Men's Casual Shirt">
+                <img src="https://images.unsplash.com/photo-1541099649105-f69ad21f3246?auto=format&fit=crop&w=400&q=70" alt="Casual shirt for men" />
+                <h4>Men's Casual Shirt</h4>
+                <p>$49.99</p>
+                <button aria-label="Quick view men's casual shirt">Quick View</button>
+            </article>
+            <article class="product" tabindex="0" aria-label="Product 3: Elegant Handbag">
+                <img src="https://images.unsplash.com/photo-1519741496241-9b0b03a5a45e?auto=format&fit=crop&w=400&q=70" alt="Elegant leather handbag" />
+                <h4>Elegant Handbag</h4>
+                <p>$99.99</p>
+                <button aria-label="Quick view elegant handbag">Quick View</button>
+            </article>
+        </div>
+    </section>
+
+    <section class="newsletter" aria-label="Newsletter Subscription">
+        <h2>Subscribe to our Newsletter</h2>
+        <form onsubmit="event.preventDefault(); alert('Thank you for subscribing!');" aria-label="Newsletter signup form">
+            <input type="email" name="email" placeholder="Enter your email" required aria-required="true" />
+            <button type="submit">Subscribe</button>
+        </form>
+    </section>
+
+    <footer class="footer" aria-label="Footer">
+        <div class="footer-links" role="navigation" aria-label="Footer site links">
+            <a href="#" aria-label="Privacy Policy">Privacy Policy</a>
+            <a href="#" aria-label="Terms of Service">Terms of Service</a>
+            <a href="#" aria-label="Returns">Returns</a>
+        </div>
+        <div class="social-media" aria-label="Social media links">
+            <a href="https://facebook.com/abhivastra" target="_blank" rel="noopener noreferrer" aria-label="Facebook">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#ffffff" viewBox="0 0 24 24" width="24" height="24"><path d="M22.675 0h-21.35C.592 0 0 .592 0 1.325v21.351C0 23.407.592 24 1.325 24H12.82v-9.294H9.692v-3.622h3.128V8.413c0-3.1 1.893-4.788 4.659-4.788 1.325 0 2.466.099 2.797.143v3.24l-1.92.001c-1.504 0-1.796.715-1.796 1.764v2.313h3.587l-.467 3.622h-3.12V24h6.116c.732 0 1.324-.593 1.324-1.324V1.325c0-.733-.592-1.325-1.324-1.325z"/></svg>
+            </a>
+            <a href="https://instagram.com/abhivastra" target="_blank" rel="noopener noreferrer" aria-label="Instagram">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#ffffff" viewBox="0 0 24 24" width="24" height="24"><path d="M7.5 2h9A5.511 5.511 0 0122 7.5v9a5.511 5.511 0 01-5.5 5.5h-9A5.511 5.511 0 012 16.5v-9A5.511 5.511 0 017.5 2zm4.5 3a4.5 4.5 0 100 9 4.5 4.5 0 000-9zm5.25-1.5a1.125 1.125 0 11-2.25 0 1.125 1.125 0 012.25 0zM12 8.25a3.75 3.75 0 110 7.5 3.75 3.75 0 010-7.5z"/></svg>
+            </a>
+            <a href="https://twitter.com/abhivastra" target="_blank" rel="noopener noreferrer" aria-label="Twitter">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="#ffffff" viewBox="0 0 24 24" width="24" height="24"><path d="M23.954 4.569a10 10 0 01-2.825.775 4.932 4.932 0 002.163-2.724 9.978 9.978 0 01-3.127 1.195 4.916 4.916 0 00-8.379 4.482A13.94 13.94 0 011.671 3.149 4.911 4.911 0 003.195 9.722a4.897 4.897 0 01-2.228-.616v.06a4.916 4.916 0 003.946 4.809 4.996 4.996 0 01-1.293.172c-.315 0-.624-.028-.928-.082a4.938 4.938 0 004.6 3.417A9.869 9.869 0 012 19.54a13.924 13.924 0 007.548 2.209c9.054 0 14-7.496 14-13.986 0-.213 0-.425-.015-.635a9.936 9.936 0 002.412-2.544z"/></svg>
+            </a>
+        </div>
+        <p>&copy; <span id="currentYear"></span> Abhivastra Designer Studio. All rights reserved.</p>
+    </footer>
+
+    <script>
+        // Set current year in footer dynamically
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+    </script>
+</body>
 </html>
+
